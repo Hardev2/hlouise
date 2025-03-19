@@ -38,13 +38,13 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 w-full z-50 transition-all duration-300',
+        'fixed w-full z-50 transition-all duration-300',
         isScrolled
-          ? 'bg-bg-color shadow-md backdrop-blur-sm'
+          ? 'bg-gray-color w-full shadow-md backdrop-blur-sm'
           : 'bg-transparent',
         isMenuOpen && 'bg-bg-color shadow-md'
       )}>
-      <div className='container mx-auto px-4'>
+      <div className='mx-auto px-4'>
         <div className='flex items-center justify-between h-16 md:h-20'>
           {/* Logo */}
           <Link to='/' className='text-lg font-bold text-white '>
@@ -62,7 +62,7 @@ export function Navbar() {
                   'text-sm font-medium transition-colors text-black',
                   location.pathname === item.href
                     ? 'text-30-percent font-semibold'
-                    : 'text-white hover:text-primary'
+                    : 'text-white hover:text-gray'
                 )}>
                 {item.name}
               </Link>
@@ -94,10 +94,10 @@ export function Navbar() {
                 key={item.name}
                 to={item.href}
                 className={cn(
-                  'text-lg font-medium transition-colors',
+                  'text-6xl font-medium transition-colors',
                   location.pathname === item.href
                     ? 'text-30-percent font-semibold'
-                    : 'text-white hover:text-primary'
+                    : 'text-white hover:text-gray'
                 )}
                 onClick={() => setIsMenuOpen(false)}>
                 {item.name}

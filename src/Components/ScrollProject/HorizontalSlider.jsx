@@ -92,7 +92,7 @@ function HorizontalSlider() {
         <div ref={sliderRef} className='flex items-center h-full'>
           {images.map((image, index) => (
             <Link key={image.id}>
-              <div className='min-w-[80vw] md:min-w-[50vw] h-[70vh] p-4 flex items-center justify-center'>
+              <div className='min-w-[90vw] md:min-w-[50vw] h-[70vh] p-4 flex items-center justify-center'>
                 <div className='relative w-full h-full rounded-xl overflow-hidden shadow-xl'>
                   <div className='flex items-center justify-start h-full'>
                     {image.description && ( // Only display if description exists

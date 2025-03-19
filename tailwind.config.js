@@ -12,17 +12,25 @@ export default {
       gridTemplateColumns: { '70/30': '70% 28%' },
       colors: {
         '30-percent': '#c7dc5a',
-        'bg-color': '#0A0A0A',
-        gray: '#5B5B5B',
+        'bg-color': '#000000',
+        'gray-color': '#373737',
       },
       keyframes: {
         spin: {
-          from: { transform: 'translateX(-50%) rotate(0deg)' },
-          to: { transform: 'translateX(-50%) rotate(360deg)' },
+          from: { transform: 'rotate(0deg)' },
+          to: { transform: 'rotate(360deg)' },
+        },
+        heartbeat: {
+          '0%': { transform: 'translateX(-50%)  scale(1)' },
+          '25%': { transform: 'translateX(-50%) scale(1.2)' },
+          '50%': { transform: 'translateX(-50%) scale(1)' },
+          '75%': { transform: 'translateX(-50%) scale(1.2)' },
+          '100%': { transform: 'translateX(-50%) (1)' },
         },
       },
       animation: {
-        spin: 'spin 50s linear infinite',
+        spin: 'spin 50s infinite linear',
+        heartbeat: 'heartbeat 0.6s infinite ease-in-out',
       },
     },
   },
