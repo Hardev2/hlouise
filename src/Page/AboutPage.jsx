@@ -1,19 +1,21 @@
-import React from 'react';
-import Loader from '../Components/Loader';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import Loader from '../Components/Loader'; // Adjust the import path if needed
 
 const AboutPage = () => {
   const [loading, setLoading] = useState(true);
-  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
+    // Simulate a delay before loading content
+    const timer = setTimeout(() => {
       setLoading(false);
-    }, 1000); // Simulate 2 seconds delay
+    }, 1000); // Adjust time as needed (2 seconds here)
+
+    return () => clearTimeout(timer); // Cleanup timeout
   }, []);
 
-  if (loading) return <Loader />;
-  return <div className='bg-bg-color w-full min-h-screen '>AboutPage</div>;
+  if (loading) return <Loader />; // Show loader while loading is true
+
+  return <div className='bg-bg-color w-full h-screen'>about page</div>;
 };
 
 export default AboutPage;

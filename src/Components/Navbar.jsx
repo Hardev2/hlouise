@@ -59,15 +59,15 @@ export function Navbar() {
                 key={item.name}
                 to={item.href}
                 className={cn(
-                  'text-sm font-medium transition-colors text-black',
+                  'text-sm font-medium transition-colors duration-300 text-black',
                   location.pathname === item.href
                     ? 'text-30-percent font-semibold'
-                    : 'text-white hover:text-gray'
+                    : 'text-white hover:text-gray-color'
                 )}>
                 {item.name}
               </Link>
             ))}
-            <Button />
+            <Button title='Get Started' />
           </nav>
 
           {/* Mobile Menu Button */}
@@ -77,9 +77,9 @@ export function Navbar() {
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMenuOpen}>
             {isMenuOpen ? (
-              <FiX className='h-6 w-6 text-white' />
+              <FiX className='h-6 w-6 text-white hover:text-black' />
             ) : (
-              <FiMenu className='h-6 w-6 text-white' />
+              <FiMenu className='h-6 w-6 text-white hover:text-black' />
             )}
           </button>
         </div>
@@ -94,16 +94,16 @@ export function Navbar() {
                 key={item.name}
                 to={item.href}
                 className={cn(
-                  'text-6xl font-medium transition-colors',
+                  'text-6xl font-medium transition-colors duration-300 ',
                   location.pathname === item.href
                     ? 'text-30-percent font-semibold'
-                    : 'text-white hover:text-gray'
+                    : 'text-white hover:text-gray-color'
                 )}
                 onClick={() => setIsMenuOpen(false)}>
                 {item.name}
               </Link>
             ))}
-            <Button className='text-black' />
+            <Button className='text-black' title='Get Started' />
           </nav>
         </div>
       )}

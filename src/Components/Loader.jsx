@@ -1,69 +1,82 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import Rose from '../assets/rose.png';
-
-const shards = [
-  { x: -50, y: -50, clip: 'polygon(0% 0%, 50% 0%, 50% 50%, 0% 50%)' },
-  { x: 50, y: -50, clip: 'polygon(50% 0%, 100% 0%, 100% 50%, 50% 50%)' },
-  { x: -50, y: 50, clip: 'polygon(0% 50%, 50% 50%, 50% 100%, 0% 100%)' },
-  { x: 50, y: 50, clip: 'polygon(50% 50%, 100% 50%, 100% 100%, 50% 100%)' },
-];
-
-const shardVariants = {
-  hidden: (i) => ({
-    opacity: 0,
-    x: shards[i].x,
-    y: shards[i].y,
-    scale: 0.5,
-  }),
-  visible: {
-    opacity: 1,
-    x: 0,
-    y: 0,
-    scale: 1,
-    transition: { duration: 1, ease: 'easeInOut' },
-  },
-};
+import React from 'react';
+import styled from 'styled-components';
 
 const Loader = () => {
-  const [shattered, setShattered] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setShattered(false), 1500);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
-    <div className='fixed inset-0 flex items-center justify-center bg-bg-color z-50'>
-      <div className='relative flex items-center justify-center w-[100px] lg:w-[200px] h-[100px] lg:h-[200px]'>
-        {shattered ? (
-          shards.map((shard, i) => (
-            <motion.div
-              key={i}
-              custom={i}
-              initial='hidden'
-              animate='visible'
-              variants={shardVariants}
-              className='absolute w-1/2 h-1/2 bg-cover bg-center'
-              style={{
-                backgroundImage: `url(${Rose})`,
-                clipPath: shard.clip,
-              }}
-            />
-          ))
-        ) : (
-          <motion.img
-            src={Rose || '/placeholder.svg'}
-            alt='Rose decoration'
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
-            className='max-w-full'
-          />
-        )}
-      </div>
+    <div className='bg-bg-color'>
+      <StyledWrapper>
+        <span className='loader' />
+      </StyledWrapper>
     </div>
   );
 };
+
+const StyledWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background: black; /* Set background to black */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+
+  .loader {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 6rem;
+    height: 6rem;
+  }
+
+  .loader:before,
+  .loader:after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    animation: pulsOut 1.8s ease-in-out infinite;
+    filter: drop-shadow(0 0 1rem rgba(255, 255, 255, 0.75));
+  }
+
+  .loader:before {
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0 0 0 1rem #fff;
+    animation-name: pulsIn;
+  }
+
+  .loader:after {
+    width: calc(100% - 2rem);
+    height: calc(100% - 2rem);
+    box-shadow: 0 0 0 0 #fff;
+  }
+
+  @keyframes pulsIn {
+    0% {
+      box-shadow: inset 0 0 0 1rem #fff;
+      opacity: 1;
+    }
+    50%,
+    100% {
+      box-shadow: inset 0 0 0 0 #fff;
+      opacity: 0;
+    }
+  }
+
+  @keyframes pulsOut {
+    0%,
+    50% {
+      box-shadow: 0 0 0 0 #fff;
+      opacity: 0;
+    }
+    100% {
+      box-shadow: 0 0 0 1rem #fff;
+      opacity: 1;
+    }
+  }
+`;
 
 export default Loader;

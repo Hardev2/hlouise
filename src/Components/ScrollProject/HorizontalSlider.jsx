@@ -86,14 +86,14 @@ function HorizontalSlider() {
   ];
 
   return (
-    <div className='min-h-screen'>
+    <div className='relative z-20 min-h-screen bg-bg-color'>
       {/* Slider container */}
       <div ref={containerRef} className='h-screen w-full overflow-hidden'>
         <div ref={sliderRef} className='flex items-center h-full'>
           {images.map((image, index) => (
             <Link key={image.id}>
-              <div className='min-w-[90vw] md:min-w-[50vw] h-[70vh] p-4 flex items-center justify-center'>
-                <div className='relative w-full h-full rounded-xl overflow-hidden shadow-xl'>
+              <div className='min-w-[100vw] md:min-w-[50vw] h-[70vh] p-4 flex items-center justify-center'>
+                <div className='relative w-full h-full rounded overflow-hidden shadow-xl'>
                   <div className='flex items-center justify-start h-full'>
                     {image.description && ( // Only display if description exists
                       <h1 className='relative left-20 text-white font-custom text-[3rem]'>

@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = () => {
+const Button = ({ title }) => {
   return (
     <StyledWrapper>
-      <button>Get Started</button>
+      <button>{title}</button>
     </StyledWrapper>
   );
 };
@@ -16,7 +16,7 @@ const StyledWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 7em;
+    width: auto;
     height: 2.4em;
     line-height: 2.5em;
     margin: 20px;
@@ -30,6 +30,7 @@ const StyledWrapper = styled.div`
     border-radius: 6px;
     font-weight: 500;
     color: var(--color);
+    padding: 0 1.5rem;
   }
 
   button:before {
