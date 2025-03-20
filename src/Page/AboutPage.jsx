@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import Loader from '../Components/Loader'; // Adjust the import path if needed
+import React from 'react';
+import ZoomParallax from '../Components/ZoomParallax/ZoomParallax';
 
 const AboutPage = () => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate a delay before loading content
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000); // Adjust time as needed (2 seconds here)
-
-    return () => clearTimeout(timer); // Cleanup timeout
-  }, []);
-
-  if (loading) return <Loader />; // Show loader while loading is true
-
-  return <div className='bg-bg-color w-full h-screen'>about page</div>;
+  return (
+    <div className='w-full h-screen bg-bg-color'>
+      <section className='h-screen'></section>
+      <div className=''>
+        <ZoomParallax />
+      </div>
+      <section className='h-screen'></section>
+    </div>
+  );
 };
 
 export default AboutPage;

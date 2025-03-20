@@ -11,8 +11,18 @@ import { FaPaperPlane } from 'react-icons/fa';
 import emailjs from '@emailjs/browser';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import Lenis from '@studio-freight/lenis';
 
 const HomePage = () => {
+  useEffect(() => {
+    const lenis = new Lenis();
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  }, []);
   const [loading, setLoading] = useState(true);
   const [isReady, setIsReady] = useState(false); // New state to delay GSAP
   // execution
@@ -88,7 +98,7 @@ const HomePage = () => {
       scrollTrigger: {
         trigger: contactRef.current,
         scroller: 'body',
-        scrub: 5,
+        scrub: true,
         start: 'top 150%',
         end: 'bottom 90%',
       },
@@ -103,7 +113,7 @@ const HomePage = () => {
       scrollTrigger: {
         trigger: contactRef.current,
         scroller: 'body',
-        scrub: 5,
+        scrub: true,
         start: 'top 100%',
         end: 'bottom 90%',
       },
@@ -118,7 +128,7 @@ const HomePage = () => {
       scrollTrigger: {
         trigger: formContactRef.current,
         scroller: 'body',
-        scrub: 5,
+        scrub: true,
         start: 'top 130%',
         end: 'bottom 90%',
       },
@@ -133,7 +143,7 @@ const HomePage = () => {
       scrollTrigger: {
         trigger: formContactRef.current,
         scroller: 'body',
-        scrub: 5,
+        scrub: true,
         start: 'top 80%',
         end: 'bottom 70%',
       },
@@ -148,7 +158,7 @@ const HomePage = () => {
       scrollTrigger: {
         trigger: formContactRef.current,
         scroller: 'body',
-        scrub: 5,
+        scrub: true,
         start: 'top 60%',
         end: 'bottom 50%',
       },

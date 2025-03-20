@@ -1,0 +1,137 @@
+.container {
+  height: 250vh;
+  position: relative;
+  left: 35px;
+  .sticky {
+    position: sticky;
+    overflow: hidden;
+    top: 0;
+    height: 100vh;
+    padding-bottom: 400px;
+
+    .el {
+      width: 100%;
+      height: 100%;
+      top: 0;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .imageContainer {
+        position: relative;
+        width: 25vw; /* Default size */
+        height: 25vh;
+
+        img {
+          object-fit: cover;
+          width: 100%;
+        }
+      }
+
+      /* Adjust sizes for specific images */
+      &:nth-of-type(1) .imageContainer {
+        width: 25.5vw;
+        left: 1.3vw;
+        height: 20vh;
+        top: -5vh;
+      }
+
+      &:nth-of-type(2) .imageContainer {
+        top: -73vh;
+        left: 1.3vw;
+        width: 350px;
+        height: 100px;
+      }
+
+      &:nth-of-type(3) .imageContainer {
+        top: -15vh;
+        left: -24.5vw;
+        width: 25vw;
+        height: 45vh;
+      }
+
+      &:nth-of-type(4) .imageContainer {
+        top: -20vh;
+        left: 28.5vw;
+        width: 28vw;
+        height: 25vh;
+      }
+
+      &:nth-of-type(5) .imageContainer {
+        top: 38vh;
+        left: 2vw;
+        width: 27vw;
+        height: 25vh;
+      }
+
+      &:nth-of-type(6) .imageContainer {
+        top: 7vh;
+        left: -25vw;
+        width: 26vw;
+        height: 25vh;
+      }
+
+      &:nth-of-type(7) .imageContainer {
+        top: 18vh;
+        left: 24.5vw;
+        width: 20vw;
+        height: 15vh;
+      }
+    }
+  }
+}
+@media (max-width: 480px) {
+  .container {
+    height: 150vh;
+  }
+
+  .el:nth-of-type(1) .imageContainer {
+    width: 70vw;
+    height: 12vh;
+    left: 0;
+    top: -8vh;
+  }
+
+  .el:nth-of-type(2) .imageContainer {
+    width: 200px;
+    height: 6vh;
+    top: -40vh;
+    left: 0;
+  }
+
+  .el:nth-of-type(3) .imageContainer {
+    width: 50vw;
+    height: 25vh;
+    top: 10vh;
+    left: -10vw;
+  }
+
+  .el:nth-of-type(4) .imageContainer {
+    width: 50vw;
+    height: 18vh;
+    top: 0;
+    left: 10vw;
+  }
+
+  .el:nth-of-type(5) .imageContainer {
+    width: 60vw;
+    height: 18vh;
+    top: 20vh;
+    left: 0;
+  }
+
+  .el:nth-of-type(6) .imageContainer {
+    width: 50vw;
+    height: 18vh;
+    top: 15vh;
+    left: -10vw;
+  }
+
+  .el:nth-of-type(7) .imageContainer {
+    width: 40vw;
+    height: 10vh;
+    top: 18vh;
+    left: 10vw;
+  }
+}
