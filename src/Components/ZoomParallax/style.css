@@ -67,7 +67,7 @@
 
       &:nth-of-type(6) .imageContainer {
         top: 7vh;
-        left: -25vw;
+        left: -24.9vw;
         width: 26vw;
         height: 25vh;
       }
@@ -84,6 +84,17 @@
 @media (max-width: 480px) {
   .container {
     height: 150vh;
+    width: 90%;
+  }
+
+  .sticky {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .el {
+    position: relative;
+    right: 30px;
   }
 
   .el:nth-of-type(1) .imageContainer {
@@ -103,7 +114,7 @@
   .el:nth-of-type(3) .imageContainer {
     width: 50vw;
     height: 25vh;
-    top: 10vh;
+    top: vh;
     left: -10vw;
   }
 

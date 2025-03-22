@@ -43,19 +43,11 @@ const HomePage = () => {
   const formPagRef = useRef(null);
 
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setLoading(false);
-    }, 1000); // Simulate 1 seconds delay
-  }, [loading]);
-
-  useEffect(() => {
-    if (loading) return; // Wait until loading is false
-
-    // Wait for DOM update before running GSAP
-    setTimeout(() => {
-      setIsReady(true);
-    }, 100); // Small delay ensures elements are in the DOM
-  }, [loading]);
+    }, 0);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (!isReady) return;
@@ -231,7 +223,7 @@ const HomePage = () => {
         </h1>
         <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mix-blend-difference w-[260px] lg:w-[500px]'>
           <img
-            src={Rose || '/placeholder.svg'}
+            src={Rose}
             alt='Rose decoration'
             className='max-w-full animate-spin '
           />

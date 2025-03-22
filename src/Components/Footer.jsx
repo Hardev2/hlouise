@@ -1,11 +1,15 @@
 import React from 'react';
 import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 const Footer = () => {
+  const quickLink = ({ isActive }) =>
+    isActive
+      ? 'text-30-percent duration-300 hover:text-gray-color'
+      : 'duration-300 hover:text-gray-color';
   return (
-    <div className=' h-screen pt-24 pb-8 lg:h-screen lg:pt-32 w-full sticky bottom-0 bg-bg-color z-[1] '>
-      <div className='flex flex-col lg:flex-row'>
+    <div className='h-auto pt-24 pb-8 lg:h-screen lg:pt-32 w-full sticky bottom-0 bg-bg-color z-[1] '>
+      <div className='w-full flex  flex-col lg:flex-row items-center justify-center'>
         <div className='lg:w-[55%] px-4'>
           <div>
             <h1 className='text-[3.5rem] text-white font-[800] leading-[5rem]'>
@@ -28,7 +32,7 @@ const Footer = () => {
                 About Me
               </button>
             </div>
-            <div className='mt-24'>
+            <div className='relative mt-14 lg:mt-24'>
               <p className='text-gray-400'>
                 @ 2025 Business Inc. All rights reserved.
               </p>
@@ -81,13 +85,15 @@ const Footer = () => {
             <div>
               <h1 className='text-white'>Quick Links</h1>
               <div className='flex flex-col text-gray-400 gap-2'>
-                <Link className='duration-300 hover:text-gray-color'>Home</Link>
-                <Link className='duration-300 hover:text-gray-color'>
+                <NavLink to='/' className={quickLink}>
+                  Home
+                </NavLink>
+                <NavLink to='/about' className={quickLink}>
                   About
-                </Link>
-                <Link className='duration-300 hover:text-gray-color'>
+                </NavLink>
+                <NavLink to='/project' className={quickLink}>
                   Project
-                </Link>
+                </NavLink>
               </div>
             </div>
           </div>
