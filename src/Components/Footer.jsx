@@ -8,8 +8,8 @@ const Footer = () => {
       ? 'text-30-percent duration-300 hover:text-gray-color'
       : 'duration-300 hover:text-gray-color';
   return (
-    <div className='h-auto pt-24 pb-8 lg:h-screen lg:pt-32 w-full sticky bottom-0 bg-bg-color z-[1] '>
-      <div className='w-full flex  flex-col lg:flex-row items-center justify-center'>
+    <div className=' h-screen pt-24 pb-8 lg:pb-0 lg:h-screen lg:pt-32 w-full sticky bottom-0 bg-bg-color z-[1] '>
+      <div className='w-full flex items-start justify-center flex-col lg:items-center lg:flex-row bg-bg-color'>
         <div className='lg:w-[55%] px-4'>
           <div>
             <h1 className='text-[3.5rem] text-white font-[800] leading-[5rem]'>
@@ -29,10 +29,10 @@ const Footer = () => {
                 Get in touch
               </button>
               <button className='cursor-pointer duration-300 text-black bg-white px-3 py-2 border-[2px] border-solid border-white rounded-full hover:animate-hoverBounce hover:shadow-[0px_5px_0px_#ffffff] hover:bg-bg-color hover:text-white w-[150px]'>
-                About Me
+                <Link to='/about'>About Me</Link>
               </button>
             </div>
-            <div className='relative mt-14 lg:mt-24'>
+            <div className='mt-16'>
               <p className='text-gray-400'>
                 @ 2025 Business Inc. All rights reserved.
               </p>

@@ -8,12 +8,29 @@ import profileImg from '../../public/images/profile.jpg';
 import { NavLink } from 'react-router-dom';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import {
+  FaCss3,
+  FaDatabase,
+  FaHtml5,
+  FaJs,
+  FaPhp,
+  FaReact,
+} from 'react-icons/fa';
 
+import movie1 from '../../public/images/movie-1.jpg';
+import movie2 from '../../public/images/movie-2.jpg';
+import music1 from '../../public/images/music-1.jpg';
+import music2 from '../../public/images/music-2.jpg';
 const AboutPage = () => {
   const [loading, setLoading] = useState(true);
   const aboutRef = useRef(null);
   const aboutContentRefs = useRef([]);
   const textRef = useRef(null);
+  const techWrapperRef = useRef(null);
+  const techStackRef = useRef([]);
+  const expWrapperRef = useRef(null);
+  const experienceRef = useRef(null);
+  const expTitleRef = useRef(null);
 
   // Smooth Scrolling Effect
   useEffect(() => {
@@ -38,6 +55,7 @@ const AboutPage = () => {
     if (!loading) {
       gsap.registerPlugin(ScrollTrigger);
       const elements = aboutContentRefs.current.filter((el) => el);
+      const tech = techStackRef.current.filter((tech) => tech);
 
       if (elements.length > 0) {
         gsap.from(elements, {
@@ -58,13 +76,66 @@ const AboutPage = () => {
         duration: 1,
         x: -30,
       });
+      const expTitle = gsap.from(expTitleRef.current, {
+        opacity: 0,
+        duration: 1,
+        x: -100,
+        scrollTrigger: {
+          trigger: expWrapperRef.current,
+          start: 'top 130%',
+          end: 'bottom 100%',
+          scrub: true,
+        },
+      });
+
+      const experience = gsap.from(experienceRef.current, {
+        opacity: 0,
+        duration: 1,
+        delay: 1,
+        y: 100,
+        scrollTrigger: {
+          trigger: expWrapperRef.current,
+          start: 'top 130%',
+          end: 'bottom 100%',
+          scrub: true,
+        },
+      });
+
+      if (tech.length > 0) {
+        gsap.from(tech, {
+          opacity: 0,
+          y: 30,
+          duration: 1,
+          stagger: 0.3,
+          scrollTrigger: {
+            trigger: techWrapperRef.current,
+            start: 'top 110%',
+            end: 'bottom 120%',
+            scrub: 5,
+            toggleActions: 'play none none none',
+          },
+        });
+      }
 
       return () => {
         gsap.killTweensOf(elements);
+        gsap.killTweensOf(tech);
         text.kill();
+        expTitle.kill();
+        experience.kill();
       };
     }
   }, [loading]);
+
+  const handleDownload = () => {
+    const fileUrl = '/Files/Resume.pdf'; // File inside public/files/
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = 'Sacol, Harvey louise.pdf'; // Rename file if needed
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   if (loading) return <Loader />;
   return (
@@ -99,20 +170,33 @@ const AboutPage = () => {
               professional development activities and stay current on the latest
               design approaches and technologies.
             </p>
+            <div className='mt-5'>
+              <button className='text-30-percent' onClick={handleDownload}>
+                Resume
+              </button>
+            </div>
           </div>
           <div
             ref={(el) => (aboutContentRefs.current[2] = el)}
             className='flex w-[30%] gap-6 lg:gap-16 flex-col items-center justify-center lg:flex-row lg:items-start'>
             <div className=''>
               <h3 className='text-[1.1rem]'>Socials</h3>
-              <div className='text-gray-400 flex gap-3 mt-5 lg:flex-col'>
-                <NavLink>Facebook</NavLink>
-                <NavLink>Instagram</NavLink>
-                <NavLink>LinkedIn</NavLink>
-                <NavLink>Github</NavLink>
+              <div className='flex gap-3 mt-5 lg:flex-col hover:text-white'>
+                <NavLink className='text-gray-400 hover:text-white duration-300'>
+                  Facebook
+                </NavLink>
+                <NavLink className='text-gray-400 hover:text-white duration-300'>
+                  Instagram
+                </NavLink>
+                <NavLink className='text-gray-400 hover:text-white duration-300'>
+                  LinkedIn
+                </NavLink>
+                <NavLink className='text-gray-400 hover:text-white duration-300'>
+                  Github
+                </NavLink>
               </div>
             </div>
-            <div className='mt-5'>
+            <div className='mt-5 lg:mt-0'>
               <h3 className='text-[1.1rem]'>Contact</h3>
               <div className='flex items-center justify-start gap-3 text-gray-400 mt-5 lg:flex-col lg:items-start'>
                 <p>harveysacol@gmail.com</p>
@@ -122,10 +206,206 @@ const AboutPage = () => {
           </div>
         </div>
       </div>
+      <div
+        ref={expWrapperRef}
+        className='relative z-10 w-full h-auto lg:h-[80vh] bg-bg-color px-16 pt-24 lg:pt-0 pb-32 lg:pb-0'>
+        <div className='flex items-center lg:items-start flex-col lg:flex-row lg:gap-[19rem] '>
+          <h1 ref={expTitleRef} className='text-white mb-5 font-bold'>
+            Experience
+          </h1>
+          <div ref={experienceRef}>
+            <h1 className='text-white font-thin text-xl mb-3'>
+              On-the-Job Training (OJT){' '}
+              <span className='border-b-2 border-30-percent'>
+                Full-Stack Developer
+              </span>
+            </h1>
+            <h3 className='text-white font-thin mb-3'>
+              Management Information and Computer Services | July 2024 -
+              December 2024
+            </h3>
+            <div ref={experienceRef} className='text-gray-400'>
+              <ul className='list-disc leading-7'>
+                <li>
+                  Developed and maintained web-based systems for internal use.
+                </li>
+                <li>
+                  Designed and implemented front-end and back-end
+                  functionalities using PHP, JavaScript, MySQL, and CSS.
+                </li>
+                <li>
+                  Successfully built:
+                  <div className='relative left-4'>
+                    <ul className='list-decimal leading-7'>
+                      <li>
+                        Project Management System - Streamlined task tracking
+                        and project assignments.
+                      </li>
+                      <li>
+                        Annual Investment Program - Automated investment
+                        planning and budgeting.
+                      </li>
+                      <li>
+                        Certificate & ID Maker - Created a tool for generating
+                        digital and printed certificates/IDs.
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                <li>
+                  Collaborated with the team to analyze system requirements and
+                  improve overall UI/UX and database performance.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        ref={techWrapperRef}
+        className='relative z-10 w-full h-screen bg-bg-color px-16'>
+        <h1 className='text-white mb-5 font-bold'>Tech</h1>
+        <div
+          ref={(tech) => (techStackRef.current[0] = tech)}
+          className='flex items-center justify-center flex-wrap gap-x-8 gap-y-3 lg:gap-x-0 lg:gap-y-14'>
+          <div className=' flex items-center justify-center flex-1 flex-shrink-0 basis-[100px] lg:flex-1 lg:flex-shrink-0 lg:basis-[300px] '>
+            <div className='text-white flex items-center justify-center gap-1 border-[2px] border-solid border-gray-400 w-[100px] h-[100px] rounded-full brightness-[30%] hover:brightness-100 transition-all duration-300 cursor-pointer hover:bg-orange-500 hover:border-orange-800 '>
+              <FaHtml5 className='text-orange-800 text-3xl' />
+              <h1 className='font-bold text-1xl'>HTML</h1>
+            </div>
+          </div>
+          <div
+            ref={(tech) => (techStackRef.current[1] = tech)}
+            className=' flex items-center justify-center flex-1 flex-shrink-0 basis-[100px] lg:flex-1 lg:flex-shrink-0 lg:basis-[300px] '>
+            <div className='text-white flex items-center justify-center gap-1 border-[2px] border-solid border-gray-400 w-[100px] h-[100px] rounded-full brightness-[30%] hover:brightness-100 transition-all duration-300 cursor-pointer hover:bg-[#2965f1] hover:border-[#264de4]'>
+              <FaCss3 className='text-[#264de4] text-3xl' />
+              <h1 className='font-bold text-2xl'>CSS</h1>
+            </div>
+          </div>
+          <div
+            ref={(tech) => (techStackRef.current[2] = tech)}
+            className=' flex items-center justify-center flex-1 flex-shrink-0 basis-[100px] lg:flex-1 lg:flex-shrink-0 lg:basis-[300px] '>
+            <div className='text-green-800 flex items-center justify-center gap-1 border-[2px] border-solid border-gray-400 w-[100px] h-[100px] rounded-full brightness-[30%] hover:brightness-100 transition-all duration-300 cursor-pointer hover:bg-green-500 hover:border-green-800'>
+              <h1 className='italic font-bold text-2xl'>GSAP</h1>
+            </div>
+          </div>
+          <div
+            ref={(tech) => (techStackRef.current[3] = tech)}
+            className=' flex items-center justify-center flex-1 flex-shrink-0 basis-[100px] lg:flex-1 lg:flex-shrink-0 lg:basis-[300px] '>
+            <div className='text-white flex items-center justify-center gap-1 border-[2px] border-solid border-gray-400 w-[100px] h-[100px] rounded-full brightness-[30%] hover:brightness-100 transition-all duration-300 cursor-pointer hover:bg-yellow-600 hover:border-[#f0db4f]'>
+              <FaJs className='text-[#f0db4f] text-3xl' />
+              <h1 className='font-bold text-2xl'>JS</h1>
+            </div>
+          </div>
+          <div
+            ref={(tech) => (techStackRef.current[4] = tech)}
+            className=' flex items-center justify-center flex-1 flex-shrink-0 basis-[100px] lg:flex-1 lg:flex-shrink-0 lg:basis-[300px] '>
+            <div className='text-white flex items-center justify-center gap-1 border-[2px] border-solid border-gray-400 w-[100px] h-[100px] rounded-full brightness-[30%] hover:brightness-100 transition-all duration-300 cursor-pointer hover:bg-blue-500 hover:border-[#61dbfb]'>
+              <FaReact className='text-[#61dbfb] text-3xl' />
+              <h1 className='font-bold text-1xl'>React</h1>
+            </div>
+          </div>
+          <div
+            ref={(tech) => (techStackRef.current[5] = tech)}
+            className=' flex items-center justify-center flex-1 flex-shrink-0 basis-[100px] lg:flex-1 lg:flex-shrink-0 lg:basis-[300px] '>
+            <div className='text-white flex items-center justify-center gap-1 border-[2px] border-solid border-gray-400 w-[100px] h-[100px] rounded-full brightness-[30%] hover:brightness-100 transition-all duration-300 cursor-pointer hover:bg-violet-700 hover:border-[#8590bd]'>
+              <FaPhp className='text-[#8590bd] text-3xl' />
+              <h1 className='font-bold text-2xl'>PHP</h1>
+            </div>
+          </div>
+          <div
+            ref={(tech) => (techStackRef.current[6] = tech)}
+            className=' flex items-center justify-center flex-1 flex-shrink-0 basis-[100px] lg:flex-1 lg:flex-shrink-0 lg:basis-[300px] '>
+            <div className='text-white flex items-center justify-center gap-1 border-[2px] border-solid border-gray-400 w-[100px] h-[100px] rounded-full brightness-[30%] hover:brightness-100 transition-all duration-300 cursor-pointer hover:bg-red-400 hover:border-red-700'>
+              <FaDatabase className='text-red-700 text-3xl' />
+              <h1 className='font-bold text-1xl'>Mysql</h1>
+            </div>
+          </div>
+          <div
+            ref={(tech) => (techStackRef.current[7] = tech)}
+            className=' flex items-center justify-center flex-1 flex-shrink-0 basis-[100px] lg:flex-1 lg:flex-shrink-0 lg:basis-[300px] '>
+            <div className='text-blue-600 flex items-center justify-center gap-1 border-[2px] border-solid border-gray-400 w-[100px] h-[100px] rounded-full brightness-[30%] hover:brightness-100 transition-all duration-300 cursor-pointer hover:bg-blue-100 hover:border-blue-500'>
+              <h1 className='italic font-bold text-[1.3rem]'>Tailwind</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className='relative z-10 bg-bg-color w-full  h-[100vh] px-16 pt-60 lg:pt-0 pb-24 text-justify lg:text-left'>
+        <h1 className='text-gray-400 text-2xl w-full lg:w-[50%] font-bold'>
+          In case you don't want to read through the boring stuff, I treat the
+          following sections as something like a personal library.
+        </h1>
+      </div>
       <div className='relative z-10'>
+        <div className='w-full bg-bg-color px-16 pt-8'>
+          <h1 className='text-white text-3xl font-bold pb-5 text-center lg:text-left'>
+            Photos
+          </h1>
+        </div>
         <ZoomParallax />
       </div>
-      <section className='h-screen'></section>
+      <section className='h-[50vh] bg-bg-color relative z-10'></section>
+      <section className='bg-bg-color relative z-10 h-auto px-16 pb-14'>
+        <div className='flex items-start justify-center gap-4 flex-col lg:flex-row'>
+          <div className='w-full lg:w-[50%]'>
+            <h1 className='text-white mb-5 text-2xl font-bold'>Music</h1>
+            <div className='flex gap-2 flex-col lg:flex-row'>
+              <div className='w-full lg:w-[300px]'>
+                <div className='bg-[#222222] w-full h-[300px] flex items-center justify-center'>
+                  <img
+                    className='w-[250px] h-[250px] lg:h-[200px] lg:w-[200px] rounded-full object-cover'
+                    src={music1}
+                    alt={music1}
+                  />
+                </div>
+                <h1 className='text-white my-3'>Daniel Caesar - Superpowers</h1>
+              </div>
+              <div className='w-full lg:w-[300px]'>
+                <div className='bg-[#222222] w-full h-[300px] flex items-center justify-center'>
+                  <img
+                    className='w-[250px] h-[250px] lg:h-[200px] lg:w-[200px] rounded-full object-cover'
+                    src={music2}
+                    alt={music2}
+                  />
+                </div>
+                <h1 className='text-white my-3'>Drake - Rich Baby Daddy</h1>
+              </div>
+            </div>
+          </div>
+          <div className=' w-full lg:w-[50%] h-auto'>
+            <h1 className='text-white mb-5 text-2xl font-bold'>Movies</h1>
+            <div className='flex gap-6 lg:gap-2 flex-col lg:flex-row w-full h-auto'>
+              <div className='w-full pb-8 lg:pb-0 h-[300px] lg:w-[300px]'>
+                <img
+                  className='w-full h-full lg:w-[300px] object-cover '
+                  src={movie1}
+                  alt={movie1}
+                />
+                <div className='my-3 flex items-center justify-between'>
+                  <h1 className='text-white'>The Notebook</h1>
+                  <button className='text-white bg-red-700 px-6 py-[1px] rounded-full hover:animate-hoverBounce border-[1px] border-solid border-white hover:bg-white hover:text-black  hover:shadow-[0px_5px_0px_#FF0000] hover:border-[#FF0000] transition-all duration-300'>
+                    Netflix
+                  </button>
+                </div>
+              </div>
+              <div className='w-full h-[300px] lg:w-[300px]'>
+                <img
+                  className='w-full h-full lg:w-[300px] object-cover '
+                  src={movie2}
+                  alt={movie1}
+                />
+
+                <div className='my-3 flex items-center justify-between'>
+                  <h1 className='text-white'>John Wick</h1>
+                  <button className='text-white bg-black px-6 py-[1px] rounded-full hover:animate-hoverBounce border-[1px] border-solid border-white hover:bg-white hover:text-black  hover:shadow-[0px_5px_0px_#FFF] hover:border-white transition-all duration-300'>
+                    Apple Tv
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <Footer />
     </div>
   );

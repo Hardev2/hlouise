@@ -1,15 +1,9 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import pic1 from '../../assets/image/pic1.png';
-import pic2 from '../../assets/image/pic2.png';
-import pic3 from '../../assets/image/pic3.png';
-import pic4 from '../../assets/image/proj3.jpg';
-import pic5 from '../../assets/image/proj4.jpg';
-import pic6 from '../../assets/image/arrow.png';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
+import Project from '../../Data/Project';
 import { Link } from 'react-router-dom';
 
 function HorizontalSlider() {
@@ -51,46 +45,13 @@ function HorizontalSlider() {
   }, []);
 
   // Array of image data
-  const images = [
-    {
-      id: 1,
-      alt: 'Image 1',
-      src: pic6,
-      description: 'Best Projects',
-    },
-    {
-      id: 2,
-      alt: 'Image 2',
-      src: pic2,
-    },
-    {
-      id: 3,
-      alt: 'Image 3',
-      src: pic1,
-    },
-    {
-      id: 4,
-      alt: 'Image 4',
-      src: pic3,
-    },
-    {
-      id: 5,
-      alt: 'Image 5',
-      src: pic4,
-    },
-    {
-      id: 6,
-      alt: 'Image 6',
-      src: pic5,
-    },
-  ];
 
   return (
     <div className='relative z-20 min-h-screen bg-bg-color'>
       {/* Slider container */}
       <div ref={containerRef} className='h-screen w-full overflow-hidden'>
         <div ref={sliderRef} className='flex items-center h-full'>
-          {images.map((image, index) => (
+          {Project.map((image, index) => (
             <Link key={image.id}>
               <div className='min-w-[100vw] md:min-w-[50vw] h-[70vh] p-4 flex items-center justify-center'>
                 <div className='relative w-full h-full rounded overflow-hidden shadow-xl'>

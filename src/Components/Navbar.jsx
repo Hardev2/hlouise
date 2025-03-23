@@ -9,15 +9,17 @@ import Button from './UI/Button';
 const navItems = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
-  { name: 'Services', href: '/services' },
   { name: 'Portfolio', href: '/portfolio' },
-  { name: 'Contact', href: '/contact' },
 ];
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   // Track scroll position
   useEffect(() => {

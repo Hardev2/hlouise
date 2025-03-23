@@ -43,12 +43,19 @@ const HomePage = () => {
   const formPagRef = useRef(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    setTimeout(() => {
       setLoading(false);
-    }, 0);
-    return () => clearTimeout(timer);
-  }, []);
+    }, 0); // Simulate 1 seconds delay
+  }, [loading]);
 
+  useEffect(() => {
+    if (loading) return; // Wait until loading is false
+
+    // Wait for DOM update before running GSAP
+    setTimeout(() => {
+      setIsReady(true);
+    }, 0); // Small delay ensures elements are in the DOM
+  }, [loading]);
   useEffect(() => {
     if (!isReady) return;
 
@@ -246,7 +253,7 @@ const HomePage = () => {
             <span className='font-custom text-white'>Hi,</span> My name is{' '}
             <span className='font-custom text-white'>Harvey, </span>I am
             twenty-three years old, a{' '}
-            <span className='font-custom text-white'>Front-end Developer </span>
+            <span className='font-custom text-white'>Web Developer </span>
             based in <span className='font-custom text-white'>Cebu</span>,
             Philippines.
           </h1>
@@ -339,7 +346,6 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-
       <Footer />
     </div>
   );
