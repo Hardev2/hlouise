@@ -17,3 +17,6 @@
 ::-webkit-scrollbar {
   display: none;
 }
+.project_card:hover .open {
+  border-bottom: 1px solid white;
+}

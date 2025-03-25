@@ -92,7 +92,7 @@ const AboutPage = () => {
         opacity: 0,
         duration: 1,
         delay: 1,
-        y: 100,
+        y: 300,
         scrollTrigger: {
           trigger: expWrapperRef.current,
           start: 'top 130%',
@@ -214,7 +214,7 @@ const AboutPage = () => {
             Experience
           </h1>
           <div ref={experienceRef}>
-            <h1 className='text-white font-thin text-xl mb-3'>
+            <h1 className='text-white font-thin text-xl mb-3 text-justify lg:text-left'>
               On-the-Job Training (OJT){' '}
               <span className='border-b-2 border-30-percent'>
                 Full-Stack Developer
@@ -225,7 +225,7 @@ const AboutPage = () => {
               December 2024
             </h3>
             <div ref={experienceRef} className='text-gray-400'>
-              <ul className='list-disc leading-7'>
+              <ul className='list-disc leading-7 text-justify lg:text-left'>
                 <li>
                   Developed and maintained web-based systems for internal use.
                 </li>

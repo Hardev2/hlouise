@@ -2,6 +2,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Rose from '../assets/rose.png';
 import gsap from 'gsap';
+import SplitType from 'split-type';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import HorizontalSlider from '../Components/ScrollProject/HorizontalSlider';
 import Loader from '../Components/Loader';
@@ -61,6 +62,24 @@ const HomePage = () => {
 
     gsap.registerPlugin(ScrollTrigger);
 
+    const nameAnim = gsap.to(nameRef.current, {
+      yPercent: -10,
+      scrollTrigger: {
+        trigger: heroRef.current,
+        start: 'top top',
+        scrub: 1.9,
+      },
+    });
+
+    const splitText = new SplitType(nameRef.current, { type: 'chars' });
+    const split = gsap.from(splitText.chars, {
+      opacity: 0,
+      y: 30,
+      stagger: 0.08,
+      duration: 1,
+      ease: 'power2.out',
+    });
+
     const bioAnim = gsap.to(bioTextRef.current, {
       yPercent: -70,
       scrollTrigger: {
@@ -70,12 +89,22 @@ const HomePage = () => {
       },
     });
 
-    const nameAnim = gsap.to(nameRef.current, {
-      yPercent: -10,
+    const splitBio = new SplitType(bioTextRef.current, {
+      type: 'lines, words',
+    });
+
+    const bioSplit = gsap.from(splitBio.words, {
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      ease: 'power2.out',
+      stagger: 0.08,
       scrollTrigger: {
-        trigger: heroRef.current,
-        start: 'top top',
-        scrub: 1.9,
+        trigger: aboutWrapperRef.current,
+        start: 'top 60%', // Adjust based on when you want it to trigger
+        end: 'bottom 80%',
+        scrub: true,
+        toggleActions: 'play none none none',
       },
     });
 
@@ -172,6 +201,8 @@ const HomePage = () => {
       form.kill();
       formBtn.kill();
       formPag.kill();
+      split.kill();
+      bioSplit.kill();
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, [isReady]);
@@ -223,12 +254,12 @@ const HomePage = () => {
         <h1
           ref={nameRef}
           className='text-white text-[6rem] lg:text-[12rem] font-[800] uppercase'>
-          Sacol <br />
+          Sacol, <br />
           <span className='font-custom font-thin capitalize'>
             Harvey Louise
           </span>
         </h1>
-        <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mix-blend-difference w-[260px] lg:w-[500px]'>
+        <div className='absolute top-[47%] left-1/2 -translate-x-1/2 -translate-y-1/2 mix-blend-difference w-[260px] lg:w-[500px]'>
           <img
             src={Rose}
             alt='Rose decoration'
@@ -237,7 +268,7 @@ const HomePage = () => {
         </div>
         <h2
           ref={descriptionRef}
-          className='uppercase text-gray-color font-[700] lg:text-2xl'>
+          className='uppercase text-gray-400 font-[700] lg:text-2xl'>
           <span className='text-white'>We developer</span> spending{' '}
           <span className='text-white'>less</span> time coding <br /> stuff than
           drinking coffee{' '}
@@ -249,7 +280,7 @@ const HomePage = () => {
         <div className='flex items-center  justify-center lg:justify-start text-justify lg:text-left relative top-10 lg:left-6 px-4'>
           <h1
             ref={bioTextRef}
-            className='text-gray-color text-4xl font-[700] tracking-wide lg:text-[4rem] lg:leading-[100px] w-[70%]'>
+            className='text-left relative lg:right-32 text-gray-400 text-4xl font-[700] tracking-wide lg:text-[4rem] lg:leading-[100px] max-w-[1000px] pl-0'>
             <span className='font-custom text-white'>Hi,</span> My name is{' '}
             <span className='font-custom text-white'>Harvey, </span>I am
             twenty-three years old, a{' '}

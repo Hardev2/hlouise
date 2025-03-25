@@ -2,13 +2,15 @@
 
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { useLocation } from 'react-router-dom';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Project from '../../Data/Project';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function HorizontalSlider() {
   const sliderRef = useRef(null);
   const containerRef = useRef(null);
+  const location = useLocation();
 
   useEffect(() => {
     // Register ScrollTrigger plugin
@@ -42,7 +44,7 @@ function HorizontalSlider() {
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
-  }, []);
+  }, [location.pathname]);
 
   // Array of image data
 
@@ -52,7 +54,7 @@ function HorizontalSlider() {
       <div ref={containerRef} className='h-screen w-full overflow-hidden'>
         <div ref={sliderRef} className='flex items-center h-full'>
           {Project.map((image, index) => (
-            <Link key={image.id}>
+            <NavLink to={`/project/${image.id}`} key={image.id}>
               <div className='min-w-[100vw] md:min-w-[50vw] h-[70vh] p-4 flex items-center justify-center'>
                 <div className='relative w-full h-full rounded overflow-hidden shadow-xl'>
                   <div className='flex items-center justify-start h-full'>
@@ -71,7 +73,7 @@ function HorizontalSlider() {
                   </div>
                 </div>
               </div>
-            </Link>
+            </NavLink>
           ))}
         </div>
       </div>

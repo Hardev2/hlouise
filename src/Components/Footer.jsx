@@ -91,7 +91,7 @@ const Footer = () => {
                 <NavLink to='/about' className={quickLink}>
                   About
                 </NavLink>
-                <NavLink to='/project' className={quickLink}>
+                <NavLink to='/projects' className={quickLink}>
                   Project
                 </NavLink>
               </div>
