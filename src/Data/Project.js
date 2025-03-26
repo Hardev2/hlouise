@@ -1,9 +1,7 @@
 import pic1 from '../assets/image/pic1.png';
 import pic2 from '../assets/image/pic2.png';
 import pic3 from '../assets/image/pic3.png';
-
 import arrow from '../assets/image/arrow.png';
-import { title } from 'framer-motion/client';
 
 const projects = [
   {
@@ -41,6 +39,14 @@ const projects = [
       description:
         'Implementing a project management system significantly enhanced efficiency, reduced miscommunication, and streamlined task management. Future improvements could include automation features and enhanced reporting tools.',
     },
+    tech: {
+      tech1: 'Html',
+      tech2: 'Css',
+      tech3: 'JavaScript',
+      tech4: 'Php',
+      tech5: 'Mysql',
+      tech6: 'Bootstrap',
+    },
   },
   {
     id: 3,
@@ -71,6 +77,14 @@ const projects = [
       description:
         'The implementation of the AIP system improved efficiency, accuracy, and accessibility in the investment planning process. Future enhancements could include budget forecasting tools and automated notifications for better workflow management.',
     },
+    tech: {
+      tech1: 'Html',
+      tech2: 'Css',
+      tech3: 'JavaScript',
+      tech4: 'Php',
+      tech5: 'Mysql',
+      tech6: 'Bootstrap',
+    },
   },
   {
     id: 4,
@@ -100,6 +114,14 @@ const projects = [
       title: 'Conclusion',
       description:
         'The Certificate and ID Maker System successfully enhanced the efficiency and accuracy of document generation for OJT students. By automating the process, the system reduced administrative workload, ensured uniformity, and improved overall service delivery.',
+    },
+    tech: {
+      tech1: 'Html',
+      tech2: 'Css',
+      tech3: 'JavaScript',
+      tech4: 'Php',
+      tech5: 'Mysql',
+      tech6: 'Bootstrap',
     },
   },
 ];

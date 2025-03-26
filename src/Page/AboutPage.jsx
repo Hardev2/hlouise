@@ -1,13 +1,12 @@
-import React, { useRef } from 'react';
+'use client';
+import { useRef, useEffect } from 'react';
 import ZoomParallax from '../Components/ZoomParallax/ZoomParallax';
-import { useEffect, useState } from 'react';
-import Loader from '../Components/Loader';
 import Lenis from '@studio-freight/lenis';
 import Footer from '../Components/Footer';
-import profileImg from '../../public/images/profile.jpg';
 import { NavLink } from 'react-router-dom';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import { motion } from 'framer-motion';
 import {
   FaCss3,
   FaDatabase,
@@ -17,12 +16,7 @@ import {
   FaReact,
 } from 'react-icons/fa';
 
-import movie1 from '../../public/images/movie-1.jpg';
-import movie2 from '../../public/images/movie-2.jpg';
-import music1 from '../../public/images/music-1.jpg';
-import music2 from '../../public/images/music-2.jpg';
 const AboutPage = () => {
-  const [loading, setLoading] = useState(true);
   const aboutRef = useRef(null);
   const aboutContentRefs = useRef([]);
   const textRef = useRef(null);
@@ -35,32 +29,36 @@ const AboutPage = () => {
   // Smooth Scrolling Effect
   useEffect(() => {
     const lenis = new Lenis();
-    const raf = (time) => {
+
+    function raf(time) {
       lenis.raf(time);
       requestAnimationFrame(raf);
-    };
+    }
+
     requestAnimationFrame(raf);
+
+    return () => {
+      // Cleanup lenis when component unmounts
+      lenis.destroy();
+    };
   }, []);
 
-  // Remove additional delay after loading
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 0);
-    return () => clearTimeout(timer);
-  }, []);
+    // Register ScrollTrigger plugin
+    gsap.registerPlugin(ScrollTrigger);
 
-  // GSAP Animation - Run as soon as loading is false
-  useEffect(() => {
-    if (!loading) {
-      gsap.registerPlugin(ScrollTrigger);
-      const elements = aboutContentRefs.current.filter((el) => el);
-      const tech = techStackRef.current.filter((tech) => tech);
+    // Filter out null elements
+    const elements = aboutContentRefs.current.filter((el) => el);
+    const tech = techStackRef.current.filter((tech) => tech);
 
-      if (elements.length > 0) {
-        gsap.from(elements, {
-          opacity: 0,
-          y: 30,
+    // Animation for about content
+    if (elements.length > 0) {
+      gsap.fromTo(
+        elements,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
           duration: 1,
           stagger: 0.3,
           scrollTrigger: {
@@ -68,43 +66,60 @@ const AboutPage = () => {
             start: 'top 80%',
             toggleActions: 'play none none none',
           },
-        });
-      }
+        }
+      );
+    }
 
-      const text = gsap.from(textRef.current, {
-        opacity: 0,
+    // Animation for text
+    const text = gsap.fromTo(
+      textRef.current,
+      { opacity: 0, x: -30 },
+      { opacity: 1, x: 0, duration: 1 }
+    );
+
+    // Animation for experience title
+    const expTitle = gsap.fromTo(
+      expTitleRef.current,
+      { opacity: 0, x: -100 },
+      {
+        opacity: 1,
+        x: 0,
         duration: 1,
-        x: -30,
-      });
-      const expTitle = gsap.from(expTitleRef.current, {
-        opacity: 0,
-        duration: 1,
-        x: -100,
         scrollTrigger: {
           trigger: expWrapperRef.current,
           start: 'top 130%',
           end: 'bottom 100%',
           scrub: true,
         },
-      });
+      }
+    );
 
-      const experience = gsap.from(experienceRef.current, {
-        opacity: 0,
+    // Animation for experience content
+    const experience = gsap.fromTo(
+      experienceRef.current,
+      { opacity: 0, y: 300 },
+      {
+        opacity: 1,
+        y: 0,
         duration: 1,
         delay: 1,
-        y: 300,
         scrollTrigger: {
           trigger: expWrapperRef.current,
           start: 'top 130%',
           end: 'bottom 100%',
           scrub: true,
         },
-      });
+      }
+    );
 
-      if (tech.length > 0) {
-        gsap.from(tech, {
-          opacity: 0,
-          y: 30,
+    // Animation for tech stack
+    if (tech.length > 0) {
+      gsap.fromTo(
+        tech,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
           duration: 1,
           stagger: 0.3,
           scrollTrigger: {
@@ -114,18 +129,26 @@ const AboutPage = () => {
             scrub: 5,
             toggleActions: 'play none none none',
           },
-        });
-      }
-
-      return () => {
-        gsap.killTweensOf(elements);
-        gsap.killTweensOf(tech);
-        text.kill();
-        expTitle.kill();
-        experience.kill();
-      };
+        }
+      );
     }
-  }, [loading]);
+
+    // Cleanup animations on unmount
+    return () => {
+      if (elements.length > 0) {
+        gsap.killTweensOf(elements);
+      }
+      if (tech.length > 0) {
+        gsap.killTweensOf(tech);
+      }
+      text.kill();
+      expTitle.kill();
+      experience.kill();
+
+      // Kill all ScrollTriggers to prevent memory leaks
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
 
   const handleDownload = () => {
     const fileUrl = '/Files/Resume.pdf'; // File inside public/files/
@@ -137,21 +160,20 @@ const AboutPage = () => {
     document.body.removeChild(link);
   };
 
-  if (loading) return <Loader />;
   return (
     <div ref={aboutRef} className='bg-bg-color w-screen py-20'>
       <div className='relative z-10 h-auto lg:h-screen pb-10 bg-bg-color mt-10 text-white text-center lg:text-left px-16'>
         <h1 ref={textRef} className='text-3xl font-bold'>
           About me
         </h1>
-        <div className='mt-5 flex items-center justify-center flex-col gap-10  lg:flex-row lg:items-start'>
+        <div className='mt-5 flex items-center justify-center flex-col gap-10 lg:flex-row lg:items-start'>
           <div
             ref={(el) => (aboutContentRefs.current[0] = el)}
             className='w-full lg:w-[30%] flex items-center justify-center mt-8 lg:mt-0'>
             <img
-              className='w-[270px] h-[270px] object-cover rounded-full '
-              src={profileImg}
-              alt=''
+              className='w-[270px] h-[270px] object-cover rounded-full'
+              src='/images/profile.jpg'
+              alt='Profile'
             />
           </div>
           <div
@@ -178,20 +200,28 @@ const AboutPage = () => {
           </div>
           <div
             ref={(el) => (aboutContentRefs.current[2] = el)}
-            className='flex w-[30%] gap-6 lg:gap-16 flex-col items-center justify-center lg:flex-row lg:items-start'>
+            className='flex w-full lg:w-[30%] gap-6 lg:gap-16 flex-col items-center justify-center lg:flex-row lg:items-start'>
             <div className=''>
               <h3 className='text-[1.1rem]'>Socials</h3>
-              <div className='flex gap-3 mt-5 lg:flex-col hover:text-white'>
-                <NavLink className='text-gray-400 hover:text-white duration-300'>
+              <div className='flex gap-3 mt-5 lg:flex-col'>
+                <NavLink
+                  to='#'
+                  className='text-gray-400 hover:text-white duration-300'>
                   Facebook
                 </NavLink>
-                <NavLink className='text-gray-400 hover:text-white duration-300'>
+                <NavLink
+                  to='#'
+                  className='text-gray-400 hover:text-white duration-300'>
                   Instagram
                 </NavLink>
-                <NavLink className='text-gray-400 hover:text-white duration-300'>
+                <NavLink
+                  to='#'
+                  className='text-gray-400 hover:text-white duration-300'>
                   LinkedIn
                 </NavLink>
-                <NavLink className='text-gray-400 hover:text-white duration-300'>
+                <NavLink
+                  to='#'
+                  className='text-gray-400 hover:text-white duration-300'>
                   Github
                 </NavLink>
               </div>
@@ -209,7 +239,7 @@ const AboutPage = () => {
       <div
         ref={expWrapperRef}
         className='relative z-10 w-full h-auto lg:h-[80vh] bg-bg-color px-16 pt-24 lg:pt-0 pb-32 lg:pb-0'>
-        <div className='flex items-center lg:items-start flex-col lg:flex-row lg:gap-[19rem] '>
+        <div className='flex items-center lg:items-start flex-col lg:flex-row lg:gap-[19rem]'>
           <h1 ref={expTitleRef} className='text-white mb-5 font-bold'>
             Experience
           </h1>
@@ -224,7 +254,7 @@ const AboutPage = () => {
               Management Information and Computer Services | July 2024 -
               December 2024
             </h3>
-            <div ref={experienceRef} className='text-gray-400'>
+            <div className='text-gray-400'>
               <ul className='list-disc leading-7 text-justify lg:text-left'>
                 <li>
                   Developed and maintained web-based systems for internal use.
@@ -263,78 +293,85 @@ const AboutPage = () => {
       </div>
       <div
         ref={techWrapperRef}
-        className='relative z-10 w-full h-screen bg-bg-color px-16'>
+        className='relative z-10 w-full h-auto min-h-screen bg-bg-color px-16 py-16'>
         <h1 className='text-white mb-5 font-bold'>Tech</h1>
-        <div
-          ref={(tech) => (techStackRef.current[0] = tech)}
-          className='flex items-center justify-center flex-wrap gap-x-8 gap-y-3 lg:gap-x-0 lg:gap-y-14'>
-          <div className=' flex items-center justify-center flex-1 flex-shrink-0 basis-[100px] lg:flex-1 lg:flex-shrink-0 lg:basis-[300px] '>
-            <div className='text-white flex items-center justify-center gap-1 border-[2px] border-solid border-gray-400 w-[100px] h-[100px] rounded-full brightness-[30%] hover:brightness-100 transition-all duration-300 cursor-pointer hover:bg-orange-500 hover:border-orange-800 '>
-              <FaHtml5 className='text-orange-800 text-3xl' />
-              <h1 className='font-bold text-1xl'>HTML</h1>
+        <div className='flex items-center justify-center flex-wrap gap-x-8 gap-y-3 lg:gap-x-0 lg:gap-y-14'>
+          {[
+            {
+              icon: <FaHtml5 className='text-orange-800 text-3xl' />,
+              name: 'HTML',
+              hoverBg: 'hover:bg-orange-500',
+              hoverBorder: 'hover:border-orange-800',
+            },
+            {
+              icon: <FaCss3 className='text-[#264de4] text-3xl' />,
+              name: 'CSS',
+              hoverBg: 'hover:bg-[#2965f1]',
+              hoverBorder: 'hover:border-[#264de4]',
+            },
+            {
+              name: 'GSAP',
+              hoverBg: 'hover:bg-green-500',
+              hoverBorder: 'hover:border-green-800',
+              textColor: 'text-green-800',
+            },
+            {
+              icon: <FaJs className='text-[#f0db4f] text-3xl' />,
+              name: 'JS',
+              hoverBg: 'hover:bg-yellow-600',
+              hoverBorder: 'hover:border-[#f0db4f]',
+            },
+            {
+              icon: <FaReact className='text-[#61dbfb] text-3xl' />,
+              name: 'React',
+              hoverBg: 'hover:bg-blue-500',
+              hoverBorder: 'hover:border-[#61dbfb]',
+            },
+            {
+              icon: <FaPhp className='text-[#8590bd] text-3xl' />,
+              name: 'PHP',
+              hoverBg: 'hover:bg-violet-700',
+              hoverBorder: 'hover:border-[#8590bd]',
+            },
+            {
+              icon: <FaDatabase className='text-red-700 text-3xl' />,
+              name: 'Mysql',
+              hoverBg: 'hover:bg-red-400',
+              hoverBorder: 'hover:border-red-700',
+            },
+            {
+              name: 'Tailwind',
+              hoverBg: 'hover:bg-blue-100',
+              hoverBorder: 'hover:border-blue-500',
+              textColor: 'text-blue-600',
+            },
+          ].map((tech, index) => (
+            <div
+              key={index}
+              ref={(el) => (techStackRef.current[index] = el)}
+              className='flex items-center justify-center flex-1 flex-shrink-0 basis-[100px] lg:flex-1 lg:flex-shrink-0 lg:basis-[300px]'>
+              <div
+                className={`${
+                  tech.textColor || 'text-white'
+                } flex items-center justify-center gap-1 border-[2px] border-solid border-gray-400 w-[100px] h-[100px] rounded-full brightness-[30%] hover:brightness-100 transition-all duration-300 cursor-pointer ${
+                  tech.hoverBg
+                } ${tech.hoverBorder}`}>
+                {tech.icon}
+                <h1 className='font-bold text-1xl'>{tech.name}</h1>
+              </div>
             </div>
-          </div>
-          <div
-            ref={(tech) => (techStackRef.current[1] = tech)}
-            className=' flex items-center justify-center flex-1 flex-shrink-0 basis-[100px] lg:flex-1 lg:flex-shrink-0 lg:basis-[300px] '>
-            <div className='text-white flex items-center justify-center gap-1 border-[2px] border-solid border-gray-400 w-[100px] h-[100px] rounded-full brightness-[30%] hover:brightness-100 transition-all duration-300 cursor-pointer hover:bg-[#2965f1] hover:border-[#264de4]'>
-              <FaCss3 className='text-[#264de4] text-3xl' />
-              <h1 className='font-bold text-2xl'>CSS</h1>
-            </div>
-          </div>
-          <div
-            ref={(tech) => (techStackRef.current[2] = tech)}
-            className=' flex items-center justify-center flex-1 flex-shrink-0 basis-[100px] lg:flex-1 lg:flex-shrink-0 lg:basis-[300px] '>
-            <div className='text-green-800 flex items-center justify-center gap-1 border-[2px] border-solid border-gray-400 w-[100px] h-[100px] rounded-full brightness-[30%] hover:brightness-100 transition-all duration-300 cursor-pointer hover:bg-green-500 hover:border-green-800'>
-              <h1 className='italic font-bold text-2xl'>GSAP</h1>
-            </div>
-          </div>
-          <div
-            ref={(tech) => (techStackRef.current[3] = tech)}
-            className=' flex items-center justify-center flex-1 flex-shrink-0 basis-[100px] lg:flex-1 lg:flex-shrink-0 lg:basis-[300px] '>
-            <div className='text-white flex items-center justify-center gap-1 border-[2px] border-solid border-gray-400 w-[100px] h-[100px] rounded-full brightness-[30%] hover:brightness-100 transition-all duration-300 cursor-pointer hover:bg-yellow-600 hover:border-[#f0db4f]'>
-              <FaJs className='text-[#f0db4f] text-3xl' />
-              <h1 className='font-bold text-2xl'>JS</h1>
-            </div>
-          </div>
-          <div
-            ref={(tech) => (techStackRef.current[4] = tech)}
-            className=' flex items-center justify-center flex-1 flex-shrink-0 basis-[100px] lg:flex-1 lg:flex-shrink-0 lg:basis-[300px] '>
-            <div className='text-white flex items-center justify-center gap-1 border-[2px] border-solid border-gray-400 w-[100px] h-[100px] rounded-full brightness-[30%] hover:brightness-100 transition-all duration-300 cursor-pointer hover:bg-blue-500 hover:border-[#61dbfb]'>
-              <FaReact className='text-[#61dbfb] text-3xl' />
-              <h1 className='font-bold text-1xl'>React</h1>
-            </div>
-          </div>
-          <div
-            ref={(tech) => (techStackRef.current[5] = tech)}
-            className=' flex items-center justify-center flex-1 flex-shrink-0 basis-[100px] lg:flex-1 lg:flex-shrink-0 lg:basis-[300px] '>
-            <div className='text-white flex items-center justify-center gap-1 border-[2px] border-solid border-gray-400 w-[100px] h-[100px] rounded-full brightness-[30%] hover:brightness-100 transition-all duration-300 cursor-pointer hover:bg-violet-700 hover:border-[#8590bd]'>
-              <FaPhp className='text-[#8590bd] text-3xl' />
-              <h1 className='font-bold text-2xl'>PHP</h1>
-            </div>
-          </div>
-          <div
-            ref={(tech) => (techStackRef.current[6] = tech)}
-            className=' flex items-center justify-center flex-1 flex-shrink-0 basis-[100px] lg:flex-1 lg:flex-shrink-0 lg:basis-[300px] '>
-            <div className='text-white flex items-center justify-center gap-1 border-[2px] border-solid border-gray-400 w-[100px] h-[100px] rounded-full brightness-[30%] hover:brightness-100 transition-all duration-300 cursor-pointer hover:bg-red-400 hover:border-red-700'>
-              <FaDatabase className='text-red-700 text-3xl' />
-              <h1 className='font-bold text-1xl'>Mysql</h1>
-            </div>
-          </div>
-          <div
-            ref={(tech) => (techStackRef.current[7] = tech)}
-            className=' flex items-center justify-center flex-1 flex-shrink-0 basis-[100px] lg:flex-1 lg:flex-shrink-0 lg:basis-[300px] '>
-            <div className='text-blue-600 flex items-center justify-center gap-1 border-[2px] border-solid border-gray-400 w-[100px] h-[100px] rounded-full brightness-[30%] hover:brightness-100 transition-all duration-300 cursor-pointer hover:bg-blue-100 hover:border-blue-500'>
-              <h1 className='italic font-bold text-[1.3rem]'>Tailwind</h1>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
-      <div className='relative z-10 bg-bg-color w-full  h-[100vh] px-16 pt-60 lg:pt-0 pb-24 text-justify lg:text-left'>
-        <h1 className='text-gray-400 text-2xl w-full lg:w-[50%] font-bold'>
+      <div className='relative z-10 bg-bg-color w-full h-[100vh] px-16 pt-60 lg:pt-0 pb-24 text-justify lg:text-left'>
+        <motion.h1
+          initial={{ y: 48, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ ease: 'easeInOut', duration: 0.75 }}
+          className='text-gray-400 text-2xl w-full lg:w-[50%] font-bold'>
           In case you don't want to read through the boring stuff, I treat the
           following sections as something like a personal library.
-        </h1>
+        </motion.h1>
       </div>
       <div className='relative z-10'>
         <div className='w-full bg-bg-color px-16 pt-8'>
@@ -346,7 +383,11 @@ const AboutPage = () => {
       </div>
       <section className='h-[50vh] bg-bg-color relative z-10'></section>
       <section className='bg-bg-color relative z-10 h-auto px-16 pb-14'>
-        <div className='flex items-start justify-center gap-4 flex-col lg:flex-row'>
+        <motion.div
+          initial={{ y: 48, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ ease: 'easeInOut', duration: 0.75 }}
+          className='flex items-start justify-center gap-4 flex-col lg:flex-row'>
           <div className='w-full lg:w-[50%]'>
             <h1 className='text-white mb-5 text-2xl font-bold'>Music</h1>
             <div className='flex gap-2 flex-col lg:flex-row'>
@@ -354,8 +395,8 @@ const AboutPage = () => {
                 <div className='bg-[#222222] w-full h-[300px] flex items-center justify-center'>
                   <img
                     className='w-[250px] h-[250px] lg:h-[200px] lg:w-[200px] rounded-full object-cover'
-                    src={music1}
-                    alt={music1}
+                    src='/images/music-1.jpg'
+                    alt='Daniel Caesar - Superpowers'
                   />
                 </div>
                 <h1 className='text-white my-3'>Daniel Caesar - Superpowers</h1>
@@ -364,47 +405,46 @@ const AboutPage = () => {
                 <div className='bg-[#222222] w-full h-[300px] flex items-center justify-center'>
                   <img
                     className='w-[250px] h-[250px] lg:h-[200px] lg:w-[200px] rounded-full object-cover'
-                    src={music2}
-                    alt={music2}
+                    src='/images/music-2.jpg'
+                    alt='Drake - Rich Baby Daddy'
                   />
                 </div>
                 <h1 className='text-white my-3'>Drake - Rich Baby Daddy</h1>
               </div>
             </div>
           </div>
-          <div className=' w-full lg:w-[50%] h-auto'>
+          <div className='w-full lg:w-[50%] h-auto'>
             <h1 className='text-white mb-5 text-2xl font-bold'>Movies</h1>
             <div className='flex gap-6 lg:gap-2 flex-col lg:flex-row w-full h-auto'>
               <div className='w-full pb-8 lg:pb-0 h-[300px] lg:w-[300px]'>
                 <img
-                  className='w-full h-full lg:w-[300px] object-cover '
-                  src={movie1}
-                  alt={movie1}
+                  className='w-full h-full lg:w-[300px] object-cover'
+                  src='/images/movie-1.jpg'
+                  alt='The Notebook'
                 />
                 <div className='my-3 flex items-center justify-between'>
                   <h1 className='text-white'>The Notebook</h1>
-                  <button className='text-white bg-red-700 px-6 py-[1px] rounded-full hover:animate-hoverBounce border-[1px] border-solid border-white hover:bg-white hover:text-black  hover:shadow-[0px_5px_0px_#FF0000] hover:border-[#FF0000] transition-all duration-300'>
+                  <button className='text-white bg-red-700 px-6 py-[1px] rounded-full hover:animate-hoverBounce border-[1px] border-solid border-white hover:bg-white hover:text-black hover:shadow-[0px_5px_0px_#FF0000] hover:border-[#FF0000] transition-all duration-300'>
                     Netflix
                   </button>
                 </div>
               </div>
               <div className='w-full h-[300px] lg:w-[300px]'>
                 <img
-                  className='w-full h-full lg:w-[300px] object-cover '
-                  src={movie2}
-                  alt={movie1}
+                  className='w-full h-full lg:w-[300px] object-cover'
+                  src='/images/movie-2.jpg'
+                  alt='John Wick'
                 />
-
                 <div className='my-3 flex items-center justify-between'>
                   <h1 className='text-white'>John Wick</h1>
-                  <button className='text-white bg-black px-6 py-[1px] rounded-full hover:animate-hoverBounce border-[1px] border-solid border-white hover:bg-white hover:text-black  hover:shadow-[0px_5px_0px_#FFF] hover:border-white transition-all duration-300'>
+                  <button className='text-white bg-black px-6 py-[1px] rounded-full hover:animate-hoverBounce border-[1px] border-solid border-white hover:bg-white hover:text-black hover:shadow-[0px_5px_0px_#FFF] hover:border-white transition-all duration-300'>
                     Apple Tv
                   </button>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
       <Footer />
     </div>

@@ -7,9 +7,9 @@ import Lenis from '@studio-freight/lenis';
 import Loader from '../Components/Loader';
 import { useState, useEffect } from 'react';
 import Footer from '../Components/Footer';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const ProjectPage = () => {
-  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const lenis = new Lenis();
     const raf = (time) => {
@@ -19,25 +19,72 @@ const ProjectPage = () => {
     requestAnimationFrame(raf);
   }, []);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    });
-    return () => clearTimeout(timer);
-  }, []);
-  if (loading) return <Loader />;
+  const containerVariant = {
+    hidden: {
+      opacity: 0,
+    },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.3,
+        when: 'beforeChildren',
+        staggerChildren: 0.1,
+      },
+    },
+    exit: {
+      opacity: 0,
+      transition: {
+        duration: 0.05,
+        when: 'afterChildren',
+        staggerChildren: 0.5,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.3,
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: -20,
+      transition: {
+        duration: 0.3,
+      },
+    },
+  };
 
   return (
     <div className='w-full h-auto relative z-10 bg-bg-color'>
       <div className='px-16 py-32 relative h-auto z-10 bg-bg-color'>
-        <h1 className='text-white text-3xl font-bold'>Project</h1>
-        <div className='mt-6'>
+        <motion.h1
+          initial={{ y: 20, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ ease: 'easeInOut', duration: 0.75 }}
+          className='text-white text-3xl font-bold'>
+          Projects
+        </motion.h1>
+
+        <motion.div
+          variants={containerVariant}
+          initial='hidden'
+          animate='visible'
+          exit='exit'
+          className='mt-6'>
           {projects.slice(1).map((project) => (
-            <Link to={`/project/${project.id}`}>
-              <div className='project_card flex items-center justify-between mt-4 border-b-[1px] border-solid border-gray-700 p-2 hover:bg-gray-700 duration-300'>
-                <div
-                  key={project.id}
-                  className='text-white flex items-center gap-2 '>
+            <Link to={`/project/${project.id}`} key={project.id}>
+              <motion.div
+                variants={itemVariants}
+                className='project_card flex items-center justify-between mt-4 border-b-[1px] border-solid border-gray-700 p-2 hover:bg-gray-700 duration-300'>
+                <div className='text-white flex items-center gap-2 '>
                   <FaFolder />
                   <h1>{project.name}</h1>
                 </div>
@@ -47,11 +94,16 @@ const ProjectPage = () => {
                   </h1>
                   <FaChevronRight />
                 </div>
-              </div>
+              </motion.div>
             </Link>
           ))}
-        </div>
-        <div className='mt-24 rounded-lg border-[1px] border-solid border-zinc-600 '>
+        </motion.div>
+
+        <motion.div
+          initial={{ y: 40, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ ease: 'easeInOut', duration: 0.9 }}
+          className='mt-24 rounded-lg border-[1px] border-solid border-zinc-600 '>
           <h1 className='text-white text-xl font-bold bg-zinc-600 p-2 rounded-t-lg'>
             README.md
           </h1>
@@ -61,7 +113,7 @@ const ProjectPage = () => {
               usually larger in scope and take a longer time to complete.
             </p>
           </div>
-        </div>
+        </motion.div>
       </div>
       <Footer />
     </div>

@@ -1,12 +1,13 @@
 .container {
   height: 250vh;
   position: relative;
-  left: 35px;
+  margin: 0;
   .sticky {
     position: sticky;
     overflow: hidden;
     top: 0;
     height: 100vh;
+    width: 100vw;
     padding-bottom: 400px;
 
     .el {
@@ -26,6 +27,7 @@
         img {
           object-fit: cover;
           width: 100%;
+          border: 2px solid white;
         }
       }
 
@@ -38,14 +40,14 @@
       }
 
       &:nth-of-type(2) .imageContainer {
-        top: -73vh;
+        top: -77vh;
         left: 1.3vw;
         width: 350px;
         height: 100px;
       }
 
       &:nth-of-type(3) .imageContainer {
-        top: -15vh;
+        top: -24.5vh;
         left: -24.5vw;
         width: 25vw;
         height: 45vh;
@@ -55,13 +57,13 @@
         top: -20vh;
         left: 28.5vw;
         width: 28vw;
-        height: 25vh;
+        height: 35vh;
       }
 
       &:nth-of-type(5) .imageContainer {
-        top: 38vh;
-        left: 2vw;
-        width: 27vw;
+        top: 39.5vh;
+        left: 1.3vw;
+        width: 25.5vw;
         height: 25vh;
       }
 
