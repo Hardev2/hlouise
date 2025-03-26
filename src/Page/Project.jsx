@@ -93,7 +93,7 @@ const Project = () => {
           transition={{ ease: 'easeInOut', duration: 0.75 }}
           className='text-white text-lg flex gap-2'>
           <Link to='/projects'>
-            <h1 className='font-bold border-b border-white'>Project</h1>
+            <h1 className='font-bold border-b border-white'>Projects</h1>
           </Link>
           <h1 className='text-gray-400'>/ {project.name}</h1>
         </motion.div>
@@ -109,7 +109,7 @@ const Project = () => {
 
         {/* Project Image */}
         {project.src && (
-          <div className='mt-5 w-full h-3/4 lg:h[80vh]'>
+          <div className='mt-5 w-full h-[60vh] lg:h[80vh]'>
             <motion.img
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
