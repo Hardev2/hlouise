@@ -7,14 +7,17 @@ import { NavLink } from 'react-router-dom';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
+import { SiTailwindcss } from 'react-icons/si';
 import {
   FaCss3,
   FaDatabase,
+  FaGithub,
   FaHtml5,
   FaJs,
   FaPhp,
   FaReact,
 } from 'react-icons/fa';
+import { Square, X, Minus } from 'lucide-react';
 
 const AboutPage = () => {
   const aboutRef = useRef(null);
@@ -293,57 +296,52 @@ const AboutPage = () => {
       </div>
       <div
         ref={techWrapperRef}
-        className='relative z-10 w-full h-auto min-h-screen bg-bg-color px-16 py-16'>
-        <h1 className='text-white mb-5 font-bold'>Tech</h1>
-        <div className='flex items-center justify-center flex-wrap gap-x-8 gap-y-3 lg:gap-x-0 lg:gap-y-14'>
+        className='relative z-10 w-full h-auto min-h-screen bg-bg-color px-16 py-16 '>
+        <div className='flex items-center justify-between border-[1px] border-solid border-zinc-700 p-2 rounded-t-lg'>
+          <h1 className='text-white font-bold '>Tech</h1>
+          <div className='text-gray-400 flex items-center justify-center gap-2'>
+            <Minus size={15} />
+            <Square size={15} />
+            <X size={18} />
+          </div>
+        </div>
+        <div className='flex items-center justify-center flex-wrap gap-x-8 gap-y-3 lg:gap-x-0 lg:gap-y-14 border-[1px] border-solid border-zinc-700 rounded-b-lg'>
           {[
             {
-              icon: <FaHtml5 className='text-orange-800 text-3xl' />,
+              icon: <FaHtml5 className='text-gray-400 text-2xl' />,
               name: 'HTML',
-              hoverBg: 'hover:bg-orange-500',
-              hoverBorder: 'hover:border-orange-800',
             },
             {
-              icon: <FaCss3 className='text-[#264de4] text-3xl' />,
+              icon: <FaCss3 className='text-gray-400 text-2xl' />,
               name: 'CSS',
-              hoverBg: 'hover:bg-[#2965f1]',
-              hoverBorder: 'hover:border-[#264de4]',
             },
             {
               name: 'GSAP',
-              hoverBg: 'hover:bg-green-500',
-              hoverBorder: 'hover:border-green-800',
-              textColor: 'text-green-800',
             },
             {
-              icon: <FaJs className='text-[#f0db4f] text-3xl' />,
-              name: 'JS',
-              hoverBg: 'hover:bg-yellow-600',
-              hoverBorder: 'hover:border-[#f0db4f]',
+              icon: <FaJs className='text-gray-400 text-2xl' />,
+              name: 'JavaScript',
             },
             {
-              icon: <FaReact className='text-[#61dbfb] text-3xl' />,
+              icon: <FaReact className='text-gray-400 text-3xl' />,
               name: 'React',
-              hoverBg: 'hover:bg-blue-500',
-              hoverBorder: 'hover:border-[#61dbfb]',
             },
             {
-              icon: <FaPhp className='text-[#8590bd] text-3xl' />,
+              icon: <FaPhp className='text-gray-400 text-3xl' />,
               name: 'PHP',
-              hoverBg: 'hover:bg-violet-700',
-              hoverBorder: 'hover:border-[#8590bd]',
             },
             {
-              icon: <FaDatabase className='text-red-700 text-3xl' />,
+              icon: <FaDatabase className='text-gray-400 text-2xl' />,
               name: 'Mysql',
-              hoverBg: 'hover:bg-red-400',
-              hoverBorder: 'hover:border-red-700',
             },
             {
+              icon: <SiTailwindcss className='text-gray-400 text-3xl' />,
               name: 'Tailwind',
-              hoverBg: 'hover:bg-blue-100',
-              hoverBorder: 'hover:border-blue-500',
-              textColor: 'text-blue-600',
+              textColor: 'text-gray-400',
+            },
+            {
+              icon: <FaGithub />,
+              name: 'Github',
             },
           ].map((tech, index) => (
             <div
@@ -352,10 +350,8 @@ const AboutPage = () => {
               className='flex items-center justify-center flex-1 flex-shrink-0 basis-[100px] lg:flex-1 lg:flex-shrink-0 lg:basis-[300px]'>
               <div
                 className={`${
-                  tech.textColor || 'text-white'
-                } flex items-center justify-center gap-1 border-[2px] border-solid border-gray-400 w-[100px] h-[100px] rounded-full brightness-[30%] hover:brightness-100 transition-all duration-300 cursor-pointer ${
-                  tech.hoverBg
-                } ${tech.hoverBorder}`}>
+                  tech.textColor || 'text-gray-400'
+                } flex flex-wrap items-center justify-center gap-1 w-[100px] h-[50px] rounded-full  transition-all duration-300 cursor-pointer`}>
                 {tech.icon}
                 <h1 className='font-bold text-1xl'>{tech.name}</h1>
               </div>
