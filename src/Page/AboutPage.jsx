@@ -171,7 +171,7 @@ const AboutPage = () => {
             ref={(el) => (aboutContentRefs.current[0] = el)}
             className='w-full lg:w-[30%] flex items-center justify-center mt-8 lg:mt-0'>
             <img
-              className='w-[270px] h-[270px] object-cover rounded-full'
+              className='w-[min(50vw,270px)] h-[min(50vw,270px)] object-cover rounded-full aspect-square'
               src='/images/profile.jpg'
               alt='Profile'
             />
@@ -394,17 +394,18 @@ const AboutPage = () => {
               <div className='w-full lg:w-[300px]'>
                 <div className='bg-[#222222] w-full h-[300px] flex items-center justify-center'>
                   <img
-                    className='w-[250px] h-[250px] lg:h-[200px] lg:w-[200px] rounded-full object-cover'
+                    className='w-[250px] h-[250px] lg:w-[200px] lg:h-[200px] rounded-full object-cover aspect-square'
                     src='/images/music-1.jpg'
                     alt='Daniel Caesar - Superpowers'
                   />
                 </div>
                 <h1 className='text-white my-3'>Daniel Caesar - Superpowers</h1>
               </div>
+
               <div className='w-full lg:w-[300px]'>
                 <div className='bg-[#222222] w-full h-[300px] flex items-center justify-center'>
                   <img
-                    className='w-[250px] h-[250px] lg:h-[200px] lg:w-[200px] rounded-full object-cover'
+                    className='w-[250px] h-[250px] lg:w-[200px] lg:h-[200px] rounded-full object-cover aspect-square'
                     src='/images/music-2.jpg'
                     alt='Drake - Rich Baby Daddy'
                   />
