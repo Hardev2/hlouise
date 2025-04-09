@@ -11,7 +11,6 @@ import emailjs from '@emailjs/browser';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import Lenis from '@studio-freight/lenis';
-
 import Rose from '../assets/rose.png';
 
 const HomePage = () => {
@@ -304,7 +303,7 @@ const HomePage = () => {
         </div>
       </section>
       <HorizontalSlider />
-      <section className='relative z-30 h-screen bg-bg-color'></section>
+      <section className='relative z-30 h-[50vh] bg-bg-color'></section>
       <section className='relative pb-7 bg-bg-color z-40'>
         <div
           ref={contactRef}
