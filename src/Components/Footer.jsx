@@ -1,5 +1,11 @@
 import React from 'react';
-import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import {
+  FaFacebook,
+  FaTwitter,
+  FaLinkedin,
+  FaInstagram,
+  FaGithub,
+} from 'react-icons/fa';
 import { NavLink, Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -56,7 +62,7 @@ const Footer = () => {
               </p>
               <p className='text-gray-400'>
                 <span className='font-semibold'>Phone:</span>
-                0963888921
+                09639975499
               </p>
               <p className='text-gray-400'>
                 <span className='font-semibold'>Address:</span>
@@ -66,17 +72,23 @@ const Footer = () => {
             <div>
               <h1 className='text-white font-semibold'>Follow Me</h1>
               <div className='text-white text-lg flex gap-2 '>
-                <Link className='hover:text-30-percent'>
+                <Link
+                  to='https://www.facebook.com/harvey.sacol'
+                  target='_blank'
+                  className='hover:text-30-percent'>
                   <FaFacebook />
                 </Link>
-                <Link className='hover:text-30-percent'>
-                  <FaTwitter />
-                </Link>
-                <Link className='hover:text-30-percent'>
+                <Link
+                  to='https://www.linkedin.com/in/harvey-louise-sacol-43000435b/'
+                  target='_blank'
+                  className='hover:text-30-percent'>
                   <FaLinkedin />
                 </Link>
-                <Link className='hover:text-30-percent'>
-                  <FaInstagram />
+                <Link
+                  to='https://github.com/Hardev2'
+                  target='_blank'
+                  className='hover:text-30-percent'>
+                  <FaGithub />
                 </Link>
               </div>
             </div>

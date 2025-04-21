@@ -154,7 +154,7 @@ const AboutPage = () => {
   }, []);
 
   const handleDownload = () => {
-    const fileUrl = '/Files/Resume.pdf'; // File inside public/files/
+    const fileUrl = '/Files/SacolResume.pdf'; // File inside public/files/
     const link = document.createElement('a');
     link.href = fileUrl;
     link.download = 'Sacol, Harvey louise.pdf'; // Rename file if needed
@@ -208,22 +208,21 @@ const AboutPage = () => {
               <h3 className='text-[1.1rem]'>Socials</h3>
               <div className='flex gap-3 mt-5 lg:flex-col'>
                 <NavLink
-                  to='#'
+                  to='https://www.facebook.com/harvey.sacol'
+                  target='_blank'
                   className='text-gray-400 hover:text-white duration-300'>
                   Facebook
                 </NavLink>
+
                 <NavLink
-                  to='#'
-                  className='text-gray-400 hover:text-white duration-300'>
-                  Instagram
-                </NavLink>
-                <NavLink
-                  to='#'
+                  to='https://www.linkedin.com/in/harvey-louise-sacol-43000435b/'
+                  target='_blank'
                   className='text-gray-400 hover:text-white duration-300'>
                   LinkedIn
                 </NavLink>
                 <NavLink
-                  to='#'
+                  to='https://github.com/Hardev2'
+                  target='_blank'
                   className='text-gray-400 hover:text-white duration-300'>
                   Github
                 </NavLink>
@@ -233,7 +232,7 @@ const AboutPage = () => {
               <h3 className='text-[1.1rem]'>Contact</h3>
               <div className='flex items-center justify-start gap-3 text-gray-400 mt-5 lg:flex-col lg:items-start'>
                 <p>harveysacol@gmail.com</p>
-                <p>090639975499</p>
+                <p>09639975499</p>
               </div>
             </div>
           </div>

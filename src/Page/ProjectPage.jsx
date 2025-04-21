@@ -105,7 +105,7 @@ const ProjectPage = () => {
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ ease: 'easeInOut', duration: 0.75 }}
             className='text-white text-3xl font-bold'>
-            React Projects
+            Personal Projects
           </motion.h1>
 
           <motion.div

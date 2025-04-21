@@ -55,7 +55,7 @@ function HorizontalSlider() {
         <div ref={sliderRef} className='flex items-center h-full'>
           {Project.map((image, index) => (
             <NavLink to={`/project/${image.id}`} key={image.id}>
-              <div className='min-w-[100vw] md:min-w-[50vw] h-[70vh] p-4 flex items-center justify-center'>
+              <div className='min-w-[100vw] md:min-w-[70vw] h-[50vh] lg:h-[100vh] p-4 flex items-center justify-center'>
                 <div className='relative w-full h-full rounded overflow-hidden shadow-xl'>
                   <div className='flex items-center justify-start h-full'>
                     {image.description && ( // Only display if description exists
