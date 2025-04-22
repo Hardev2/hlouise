@@ -4,14 +4,14 @@ import pic3 from '../assets/image/pic3.png';
 import arrow from '../assets/image/arrow.png';
 
 const projects = [
+  // {
+  //   id: 1,
+  //   alt: 'Image 1',
+  //   src: arrow,
+  //   description: 'Best Projects',
+  // },
   {
     id: 1,
-    alt: 'Image 1',
-    src: arrow,
-    description: 'Best Projects',
-  },
-  {
-    id: 2,
     alt: 'Image 2',
     src: pic1,
     name: 'Project Management System',
@@ -49,7 +49,7 @@ const projects = [
     },
   },
   {
-    id: 3,
+    id: 2,
     alt: 'Image 3',
     src: pic2,
     name: 'Annual Investment Program System',
@@ -87,7 +87,7 @@ const projects = [
     },
   },
   {
-    id: 4,
+    id: 3,
     alt: 'Image 4',
     src: pic3,
     name: 'Certificate and ID System',

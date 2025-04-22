@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Project from '../../Data/Project';
 import { NavLink } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 function HorizontalSlider() {
   const sliderRef = useRef(null);

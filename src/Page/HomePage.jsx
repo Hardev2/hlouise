@@ -263,6 +263,7 @@ const HomePage = () => {
 
   return (
     <div className='bg-bg-color w-screen min-h-screen z-40'>
+      {/* Hero Section */}
       <div
         ref={heroRef}
         className='bg-bg-color text-center flex flex-col items-center justify-center relative py-20 z-40'>
@@ -289,6 +290,7 @@ const HomePage = () => {
           drinking coffee{' '}
         </h2>
       </div>
+      {/*Feature Skill*/}
       <section className='w-full h-screen bg-bg-color z-30 relative'>
         <div className='flex flex-col lg:flex-row items-center h-screen px-14 justify-center lg:justify-between select-none'>
           <motion.h1
@@ -296,7 +298,7 @@ const HomePage = () => {
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.75, ease: 'easeInOut' }}
             viewport={{ once: false }}
-            className=' text-white text-center lg:text-left uppercase font-bold text-7xl lg:text-[10rem] lg:leading-[150px]'>
+            className=' text-white text-center lg:text-left uppercase font-bold text-5xl lg:text-[10rem] lg:leading-[150px]'>
             Frontend <br /> Developer
           </motion.h1>
           <motion.p
@@ -339,13 +341,48 @@ const HomePage = () => {
           </h1>
         </div>
       </section>
+      {/* Infinite Text*/}
+      <section className='relative z-30 bg-bg-color w-full'>
+        <div className='overflow-hidden relative z-40 pb-4 '>
+          <motion.div
+            className='flex gap-8 text-white text-4xl font-bold'
+            animate={{ x: ['0%', '-100%'] }}
+            transition={{
+              repeat: Infinity,
+              duration: 20,
+              ease: 'linear',
+            }}>
+            {/* Repeat the same set of items twice for seamless loop */}
+            <div className='flex gap-14'>
+              {Array.from({ length: 10 }).map((_, i) => (
+                <span
+                  className='uppercase font-bold text-gray-400 text-5xl'
+                  key={`1-${i}`}>
+                  Project&nbsp;•
+                </span>
+              ))}
+            </div>
+            <div className='flex gap-14'>
+              {Array.from({ length: 10 }).map((_, i) => (
+                <span
+                  className='uppercase font-bold text-gray-400 text-5xl'
+                  key={`2-${i}`}>
+                  Project&nbsp;•
+                </span>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+      {/* Project Slider */}
       <HorizontalSlider />
       <section className='relative z-30 h-[50vh] bg-bg-color'></section>
+      {/* Services */}
       <section className='relative z-30 h-auto w-full bg-bg-color'>
         <div className='w-full flex items-start justify-between px-5 lg:px-14 relative'>
-          <div className='text-white select-none flex flex-col gap-8 sticky top-32'>
+          <div className='text-white select-none flex flex-col gap-8 sticky top-32 text-left items-start '>
             <p>What I Offer</p>
-            <h1 className='font-custom text-4xl lg:text-7xl'>Services</h1>
+            <h1 className='font-custom text-4xl lg:text-7xl '>Services</h1>
             <p className='capitalize'>Explore my web development Services</p>
           </div>
           <div>
@@ -357,19 +394,19 @@ const HomePage = () => {
                   transition={{ duration: 1, ease: 'easeInOut' }}
                   viewport={{ once: false }}
                   key={index}
-                  className=' text-white flex items-start gap-5 lg:gap-10 mb-20'>
+                  className=' text-white flex flex-col lg:flex-row items-center lg:items-start gap-5 lg:gap-10 mb-20 '>
                   <div className='text-[10rem]'>
                     {' '}
                     <item.Icon
-                      className='h-12 w-12 lg:h-32 lg:w-32'
+                      className='h-20 w-20 lg:h-32 lg:w-32'
                       strokeWidth={0.5}
                     />
                   </div>
-                  <div>
-                    <h3 className='uppercase text-xl lg:text-2xl text-left w-[200px] lg:w-[300px]'>
+                  <div className='text-right lg:text-left'>
+                    <h3 className='uppercase text-xl lg:text-2xl w-[200px] lg:w-[300px]'>
                       {item.title}
                     </h3>
-                    <p className=' w-[180px] lg:w-[300px] text-left text-gray-400'>
+                    <p className=' w-[200px] lg:w-[300px]  text-gray-400'>
                       {item.description}
                     </p>
                   </div>
@@ -382,6 +419,7 @@ const HomePage = () => {
         </div>
       </section>
       <section className='relative z-30 h-[50vh] bg-bg-color'></section>
+      {/* Contact Section */}
       <section className='relative pb-7 bg-bg-color z-40'>
         <div
           ref={contactRef}
@@ -467,6 +505,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+      {/* Footer Section */}
       <Footer />
     </div>
   );
