@@ -65,7 +65,7 @@ const ProjectPage = () => {
 
   return (
     <div className='w-full h-auto relative z-10 bg-bg-color'>
-      <div className='px-16 py-32 relative h-auto z-10 bg-bg-color'>
+      <div className='px-16 py-32 relative h-auto z-10 bg-bg-color '>
         <motion.h1
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -80,7 +80,7 @@ const ProjectPage = () => {
           animate='visible'
           exit='exit'
           className='mt-6'>
-          {projects.slice(1).map((project) => (
+          {projects.map((project) => (
             <Link to={`/project/${project.id}`} key={project.id}>
               <motion.div
                 variants={itemVariants}
